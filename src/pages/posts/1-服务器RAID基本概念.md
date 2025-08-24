@@ -1,10 +1,9 @@
 ---
-date: 2020/05/02
+date: 2020/07/23
 ---
 
-<img src="https://gw.alipayobjects.com/zos/k/p4/234.jpg" width="800" />
+<img src="https://data.skywangdev.com/blog/S-1.jpeg" width="800" />
 
-<small>封面图拍摄于周末拿着新到的富士 XE5 出门拍照的场景，哈哈，主要是给潮流周刊拍封面图，质感非常喜欢，照片直出拍出来也很讨喜，总之非常喜欢这个小玩具。</small>
 
 > **随便记录一些技术，筛选后发布于此。**
 

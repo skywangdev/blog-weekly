@@ -1,62 +1,172 @@
 ---
-date: 2023/03/02
+date: 2021/04/13
 ---
 
-<img src="https://gw.alipayobjects.com/zos/k/p4/234.jpg" width="800" />
+<img src="https://data.skywangdev.com/blog/S-3.jpeg" width="800" />
 
-<small>封面图拍摄于周末拿着新到的富士 XE5 出门拍照的场景，哈哈，主要是给潮流周刊拍封面图，质感非常喜欢，照片直出拍出来也很讨喜，总之非常喜欢这个小玩具。</small>
+# 一、前期准备
 
-> **记录每周看到的接地气的潮流技术，筛选后发布于此，觉得不错可关注此周刊，方便获取更新通知**
+## 1.1、查看GPU信息
 
-## 潮流工具
-
-**Maple 扩展 让你的浏览器更好看好用最近更新了**  
-<https://github.com/tw93/Maple>  
-🍁 Maple 书签一键唤起，支持设置搜索收起，速度更快。  
-🏷 Maple 标签页支持更多效果，并支持切换刷新，新增文艺复兴风格。  
-🏕️ Maple 纯白简洁主题支持选中效果深一点颜色，看着更舒服。  
-<img src="https://cdn.fliggy.com/upic/5Pq2nE.gif" width="800" />
-
-**闲鱼多任务实时/定时监控与智能分析工具**  
-<https://github.com/dingyufei615/ai-goofish-monitor>  
-这个工具挺有意思的，基于 Playwright 和 AI 过滤的闲鱼多任务实时/定时监控与智能分析工具，配备了功能完善的后台管理界面，帮助用户节省闲鱼商品过滤，能及时找到心仪商品，不过仅学习为主，不要用于做坏事。  
-<img src="https://gw.alipayobjects.com/zos/k/4j/tvLL7j.png" width="800" />
-
-**一系列开源、可靠、全球 CDN 加速的开放 API 集合**  
-<https://docs.60s-api.viki.moe>  
-一系列开源、可靠、全球 CDN 加速的开放 API 集合，包括日更资讯、榜单、翻译、百科、热搜这种常用工具接口的开放能力，也可以自己部署。  
-<img src="https://gw.alipayobjects.com/zos/k/iu/Qp4Za1.png" width="800" />
-
-**物言卡片：用于制作卡片类的场景**  
-<https://mono.cards>  
-一个有意思的小工具 物言卡片，用于制作卡片类的场景，比如链接、音乐、截图、代码，要发小红书的内容都可以，比较简洁。  
-<img src="https://gw.alipayobjects.com/zos/k/xl/1lFpv9.png"  width="800" />
+```shell
+lspci | grep -i nvidia
+```
 
 
-## 随便看看
 
-**onevcat 这篇一个半月高强度 Claude Code 使用后感受**  
-<https://onevcat.com/2025/08/claude-code/>  
-onevcat 这篇一个半月高强度 Claude Code 使用后感受，看完挺有感触，特别是在 vibe coding 时代，千万别让工具把自己逼死。效率是提高了，但人还是人，我们需要的不仅仅是更快的开发速度，还有思考的时间和生活的空间。
+## 1.2、配置内核
 
-## 随便写写
+```shell
+dnf install -y gcc dkms kernel-devel-$(uname -r) kernel-headers-$(uname -r)
+```
 
-**随便聊聊，我感觉到的 AI Coding 对于程序员的影响。**
+- 安装的版本要和当前内核版本一致
 
-<img src="https://cdn.fliggy.com/upic/wnoOST.png" width="800" />  
 
-在不到一个月使用 Claude Code $326 费用后，实际用了 $20 Pro + \$50 充值，之前用了几个月的 Cursor 已经变成牛夫人了，用得好 AI 可以很轻松达到 P6+ 工程师的水平，对于一个工程师而言感觉到又惊喜又害怕。
 
-惊喜是，AI Coding 能力真的很强，把我最近几年非前端领域一些不好解决的，实现不好的技术问题在持续交流调试的情况下，基本上给解决了，甚至像朋友玩那种游戏充钱买装备一样，忍不住很愿意松钱给 Anthropic，因为让我很惊喜，更像是交到了一个技术厉害，对人和蔼的大牛朋友。以后所谓的单兵作战在会用工具，会动脑子，懂用户需求的同学手里真的会犹如多了一个性价比极高的团队的感觉。
+## 1.3、禁用nouveau
 
-害怕是，曾经觉得自信的古法手工 Coding 的在当前的 AI 面前变得不值一提了，一个残酷但清晰的趋势，纯 Coding 能力也已不再是程序员的护城河了，当前 AI 可以很容易代替纯需求翻译的程序员了，这也是害怕的地方，加上现在互联网行业基础上处于一种降本增效的泥潭，会让这个事情变化得更快。
+```shell
+# 查看nouveau
+lsmod | grep nouveau
 
-记得 2 年前环境不好的时候有分享过，[下一代工程师的破局](https://tw93.fun/2023-10-25/new-fe.html)，应该是做产品工程师，也即知道用户哪儿有需求，然后自己独立用一个好的产品解决方案去承接，同时产品很易用，加上你很会运营推广，拉更多人来用。只不过当时 AI Coding 的能力还很弱，到了今天应该是做善用 AI 的产品工程师。
+# 禁用nouveau
+cat >  /etc/modprobe.d/blacklist.conf << EOF
+blacklist nouveau
+options nouveau modeset=0
+EOF
+```
 
-下一代好的工程师，敲代码能力只占了 30% 的优势，有 20% 在快速发掘理解业务需求本质上，知道为什么，有 20% 在架构设计上，好比一个架构师一样告诉 AI 你需要的东西以及前后端架构方式，确保后续更好实现，10% 在和 AI 更清楚的交流上，让她的执行更符合你的心意，还有 20% 在最终产品质量的把控，运营推广的把控上，好酒也怕巷子深，AI 能力再牛逼，也怕不会折腾的使用者。
 
-我感觉到 AI Coding 给工程师带来的不只是工作效率提升，甚至成倍提升，其实这里不是关键，更关键的是能更快同时处理更复杂的产品思考和技术决策，加快业务迭代思路的验证，从代码民工变成数字产品的建筑师那种感觉，当然审美在现在的软件设计工程里面会更加重要，或许假如要说当前年代好的工程师还需要具备一个很好的能力，就是产品设计和审美，这也是为啥聪明的设计师借助转型到工程师很方便的地方。
 
-不过我比较不喜欢那种宣传不懂原理技术下，教小白让他感觉有了 AI 之后能够无所不能做出产品的方式，对于计算机基础、软件架构设计、交互设计能力，才是工程师的地基，有没有 AI 这里都是一样，不能丢的是这个东西，更多需要培养的是做产品的能力。
+## 1.4、更新initramfs
 
-或许之前其实质变还没有到，Claude Code 让我感觉 AI Coding 的质变到了，纯粹包个皮肤调用他人模型做编辑器其实没有太长久的搞头，慢慢变成了模型即产品的能力竞争了，此外感觉对于个人而言，如何更大享受 AI 的便利，还有一条路就是去投资 AI。
+```shell
+# AlmaLinux/RockyLinux
+mv /boot/initramfs-$(uname -r).img /boot/initramfs-$(uname -r).img.bak
+dracut /boot/initramfs-$(uname -r).img $(uname -r)
+
+# Ubuntu
+sudo update-initramfs -u
+```
+
+- 此步骤完成后，重启操作系统再进行下一步。
+
+
+
+# 二、安装驱动
+
+## 2.1、下载驱动
+
+从[NVIDIA 驱动程序下载](https://www.nvidia.cn/Download/index.aspx?lang=cn)下载对应显卡的驱动程序，建议使用.run可执行文件。如需安装CUDA工具包（CUDA工具包内置了驱动），可以跳过此步骤安装。
+
+
+
+## 2.2、安装驱动
+
+```shell
+bash NVIDIA-Linux-x86_64-470.256.02.run
+或
+bash NVIDIA-Linux-x86_64-470.256.02.run --kernel-source-path=/usr/src/kernels/$(uname -r) -k $(uname -r)
+```
+
+
+
+## 2.3、验证安装
+
+```shell
+nvidia-smi
+```
+
+返回GPU相关信息，即表示安装成功。
+
+
+
+# 三、安装CUDA工具包
+
+## 3.1、下载cuda安装包
+
+访问[CUDA](https://developer.nvidia.com/cuda-toolkit-archive)选择与GPU匹配的操作系统和版本。因CUDA工具包包含驱动程序，可以跳过第二步，直接执行CUDA工具包安装。[CDDA工具包对应的驱动版本](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html)。
+
+
+
+## 3.2、安装cuda
+
+```shell
+bash cuda_11.4.0_470.256.02_linux.run
+```
+
+- 如果已安装驱动，请务必取消驱动安装选项，否则安装可能失败
+
+
+
+## 3.3、验证安装
+
+```shell
+/usr/local/cuda/bin/nvcc -V
+```
+
+返回cuda版本信息，即表示安装成功。
+
+
+
+# 四、安装nvidia-fabricmanager
+
+## 4.1、添加软件源
+
+```shell
+# AlmaLinux/RockyLinux
+# 根据自己系统版本添加对应版本源
+dnf config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
+
+# Ubuntu
+# 根据自己系统版本添加对应版本源
+wget https://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+
+mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+
+wget https://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub
+
+apt-key add 7fa2af80.pub
+
+rm 7fa2af80.pub
+
+echo "deb http://developer.download.nvidia.cn/compute/cuda/repos/ubuntu2004/x86_64 /" | tee /etc/apt/sources.list.d/cuda.list
+```
+
+
+
+## 4.2、安装nvidia-fabric-manager
+
+```shell
+# AlmaLinux/RockyLinux
+dnf module enable -y nvidia-driver:470
+dnf install -y nvidia-fabric-manager:470.256.02 nvidia-fabric-manager-devel-0:470.256.02
+
+# Ubuntu
+apt-get update
+apt-get -y install nvidia-fabricmanager-470=470.256.02-1
+```
+
+
+
+## 4.3、启动服务
+
+```shell
+systemctl start nvidia-fabricmanager
+systemctl status nvidia-fabricmanager
+systemctl enable nvidia-fabricmanager
+```
+
+
+
+## 4.4、验证
+
+```shell
+nvidia-smi topo -m
+```
+
+返回结果中有`NV*` 字样表示 GPU 之间有 NVLink 连接。如果所有预期的 GPU 之间都有 NVLink 连接，并且没有错误信息，那么 NVLink 应该是运行正常的。
+
+
+

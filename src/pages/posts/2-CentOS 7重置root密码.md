@@ -1,10 +1,9 @@
 ---
-date: 2020/05/12
+date: 2020/08/03
 ---
 
-<img src="https://gw.alipayobjects.com/zos/k/p4/234.jpg" width="800" />
+<img src="https://data.skywangdev.com/blog/S-2.jpeg" width="800" />
 
-<small>封面图拍摄于周末拿着新到的富士 XE5 出门拍照的场景，哈哈，主要是给潮流周刊拍封面图，质感非常喜欢，照片直出拍出来也很讨喜，总之非常喜欢这个小玩具。</small>
 
 > 在centos服务器中，普通用户拥有的权限是被root（超级管理员）限定的。有时在下载centos中下载安装软件时很不方便，所以需要进入root（超级管理员)的用户界面，但是有时会忘记root用户的密码，那么就需要进行重置root用密码。centos的版本很多，但是重置root用户的密码的方法都是相似的，都是进入单用户模式修改root密码。
 
